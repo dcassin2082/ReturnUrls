@@ -1,0 +1,55 @@
+@{
+	var grid = Html.DevExpress().GridView(settings => {
+        settings.Name = "GridView";
+        settings.CallbackRouteValues = new { Controller = "Jobs", Action = "GridViewPartial" };
+
+				settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Jobs", Action = "GridViewPartialAddNew" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Jobs", Action = "GridViewPartialUpdate" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Jobs", Action = "GridViewPartialDelete" };
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        settings.SettingsBehavior.ConfirmDelete = true;
+
+        settings.CommandColumn.Visible = false;
+        settings.CommandColumn.ShowNewButton = false;
+        settings.CommandColumn.ShowDeleteButton = false;
+        settings.CommandColumn.ShowEditButton = false;
+
+		settings.KeyFieldName = "Id";
+
+		settings.SettingsPager.Visible = true;
+		settings.Settings.ShowGroupPanel = true;
+		settings.Settings.ShowFilterRow = true;
+		settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Title";
+            column.ColumnType = MVCxGridViewColumnType.HyperLink;
+            column.Width = System.Web.UI.WebControls.Unit.Pixel(200);
+            column.SetDataItemTemplateContent(content =>
+           ViewContext.Writer.Write(
+               Html.ActionLink(content.Text, "Details", "Jobs",
+               new { ID = content.KeyValue }, null)));
+
+        });
+
+				settings.Columns.Add("PostedDate");
+
+        
+     			settings.Columns.Add("CityStatePostalCode");
+				settings.Columns.Add("JobType");
+
+                settings.Columns.Add(column =>
+                {
+                    column.FieldName = "Salary";
+                    column.Width = System.Web.UI.WebControls.Unit.Pixel(100);
+                    column.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+                });
+
+				settings.Columns.Add("SalaryType");
+			});
+		if (ViewData["EditError"] != null){
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()

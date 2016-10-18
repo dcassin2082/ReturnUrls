@@ -1,0 +1,32 @@
+﻿@model EmployeePortal.Models.Job
+
+@{
+    ViewBag.Title = "Apply";
+}
+<h2>You are about to apply for the job of @Model.Title</h2>
+@using (Html.BeginForm("SubmitJobApplication", "Jobs", FormMethod.Post))
+{
+    @Html.HiddenFor(m => m.Id)
+    @Html.HiddenFor(m => m.Title)
+    @Html.HiddenFor(m => m.Description)
+    @Html.HiddenFor(m => m.CityStatePostalCode)
+    @Html.HiddenFor(m => m.JobType)
+    @Html.HiddenFor(m => m.EmailNotify)
+    <div class="row">
+        <div class="col-md-12">
+            @*<input type="submit" value="Apply Now" class="btn btn-default" onclick="location.href='@Url.Action("SubmitJobApplication", "Jobs")'" />*@
+
+            <input type="submit" id="submitApplication" value="Apply Now" class="btn btn-default" onclick="location.href='@Url.Action("SubmitJobApplication", "Jobs", Html.Raw(Json.Encode(Model)))'" />
+        </div>
+    </div>
+}
+@section Scripts{
+    @*instead of an alert box we need to send them to a confirmation page*@
+    <script>
+        //$(function () {
+        //    $("#submitApplication").click(function () {
+        //        alert("You have succesfully applied for this position");
+        //    });
+        //});
+    </script>
+}

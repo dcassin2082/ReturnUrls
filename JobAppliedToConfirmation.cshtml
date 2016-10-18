@@ -1,0 +1,16 @@
+﻿@model EmployeePortal.Models.Job
+
+@{
+    ViewBag.Title = "Job Application Submitted";
+}
+<h2>You have successfully applied for the position of @Model.Title</h2>
+@using (Html.BeginForm("Index", "Jobs"))
+{
+    <div class="row">
+        <div class="col-md-6">
+            <input type="submit" class="btn btn-default" value="Job Board" />
+        </div>
+    </div>
+}
+
+

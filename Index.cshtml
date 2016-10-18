@@ -1,0 +1,12 @@
+﻿@model IEnumerable<EmployeePortal.Models.Job>
+
+@{
+    ViewBag.Title = "Job Board";
+}
+
+<div class="col-md-12">
+    <h2>Job Board</h2>
+    @Html.Action("GridViewPartial")
+    <br />
+    <br />
+</div>
